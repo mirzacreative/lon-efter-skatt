@@ -35,12 +35,14 @@
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
 {"@type":"Question","name":"Hur räknar man ut lön efter skatt?","acceptedAnswer":{"@type":"Answer","text":"Dra av kommunalskatt (ca 29–35 % beroende på kommun) från bruttolönen. Över brytpunkten 660 400 kr/år tillkommer 20 % statlig skatt. Jobbskatteavdraget sänker den effektiva skatten."}},
-{"@type":"Question","name":"Vilken kommun har lägst skatt 2026?","acceptedAnswer":{"@type":"Answer","text":"Österåker har lägst kommunalskatt 2026 med 28,93 %, följt av Kävlinge och Vellinge. Högst skatt har Dorotea med 35,65 %."}},
+{"@type":"Question","name":"Vilken kommun har lägst skatt 2026?","acceptedAnswer":{"@type":"Answer","text":"Österåker har lägst kommunalskatt 2026 med 28,93 % (avser total kommunalskatt inklusive landsting), följt av Kävlinge och Vellinge. Högst skatt har Dorotea med 35,65 %."}},
 {"@type":"Question","name":"När betalar man statlig inkomstskatt 2026?","acceptedAnswer":{"@type":"Answer","text":"Statlig inkomstskatt på 20 % betalas på den del av inkomsten som överstiger brytpunkten 660 400 kr/år. Under den betalar man bara kommunalskatt."}}
 ]}
 </script>
 </head>
 <body>
+
+
 <header class="site-header">
 <div class="wrap">
 <a class="brand" href="index.html">Lön<span>efter</span>skatt</a>
@@ -53,51 +55,61 @@
 </nav>
 </div>
 </header>
+
+
 <div class="hero">
 <h1>Räkna ut din <span class="hl">lön efter skatt</span> 2026</h1>
-<p>Gratis kalkylator med aktuella kommunalskatter för 20 svenska kommuner. Se din nettolön per månad och år – med jobbskatteavdrag och statlig skatt.</p>
+<p>Gratis kalkylator med aktuella kommunalskatter för 20 svenska kommuner. Se din nettolön per månad och år – direkt i webbläsaren.</p>
 </div>
 <main class="wrap">
 <div class="card">
 <h2>Kalkylator – lön efter skatt</h2>
-<label for="lon">Bruttolön per månad (kr)</label>
-<input type="number" id="lon" min="0" step="100" placeholder="t.ex. 40 000">
-<label for="kommun">Välj kommun</label>
+<form id="lonForm">
+<label for="manadslon">Månadslön före skatt (kr)</label>
+<input type="number" id="manadslon" min="0" step="100" placeholder="t.ex. 40 000" required>
+<label for="kommun">Kommun</label>
 <select id="kommun">
 <option value="">— Välj kommun —</option>
 <option value="30.55">Stockholm – 30,55 %</option>
 <option value="32.60">Göteborg – 32,60 %</option>
 <option value="32.42">Malmö – 32,42 %</option>
+<option value="33.65">Örebro – 33,65 %</option>
+<option value="33.40">Jönköping – 33,40 %</option>
+<option value="33.30">Norrköping – 33,30 %</option>
 <option value="32.42">Lund – 32,42 %</option>
-<option value="32.85">Uppsala – 32,85 %</option>
-<option value="31.75">Linköping – 31,75 %</option>
-<option value="34.65">Umeå – 34,65 %</option>
-<option value="31.24">Västerås – 31,24 %</option>
-<option value="31.39">Helsingborg – 31,39 %</option>
-<option value="30.24">Örebro – 30,24 %</option>
-<option value="31.15">Jönköping – 31,15 %</option>
-<option value="32.90">Norrköping – 32,90 %</option>
-<option value="32.11">Eskilstuna – 32,11 %</option>
-<option value="33.09">Gävle – 33,09 %</option>
-<option value="31.89">Sundsvall – 31,89 %</option>
-<option value="33.51">Östersund – 33,51 %</option>
-<option value="32.01">Växjö – 32,01 %</option>
-<option value="32.95">Halmstad – 32,95 %</option>
-<option value="33.79">Borås – 33,79 %</option>
-<option value="32.74">Karlstad – 32,74 %</option>
+<option value="32.65">Södertälje – 32,65 %</option>
+<option value="32.85">Eskilstuna – 32,85 %</option>
+<option value="33.55">Karlstad – 33,55 %</option>
+<option value="32.38">Halmstad – 32,38 %</option>
+<option value="33.88">Sundsvall – 33,88 %</option>
+<option value="32.19">Växjö – 32,19 %</option>
+<option value="31.80">Gävle – 31,80 %</option>
+<option value="34.01">Västerås – 34,01 %</option>
+<option value="32.74">Umeå – 32,74 %</option>
+<option value="34.32">Luleå – 34,32 %</option>
+<option value="34.75">Östersund – 34,75 %</option>
+<option value="32.90">Borås – 32,90 %</option>
+<option value="33.10">Trollhättan – 33,10 %</option>
 </select>
-<button class="btn" onclick="berakna()">Beräkna lön efter skatt</button>
-<div class="result" id="result">
-<p><strong>Ange bruttolön och kommun för att se resultatet.</strong></p>
-</div>
+<button class="btn" type="submit">Beräkna lön efter skatt</button>
+</form>
+<div id="result" aria-live="polite"></div>
 <p class="muted">Förenklad beräkning: kommunalskatt enligt vald kommun, jobbskatteavdrag schablonmässigt och statlig skatt över brytpunkten. Se detaljer i <a href="sa-fungerar-det.html">Så fungerar det</a>.</p>
 </div>
 
-<section class="card">
+<section class="prose">
+<h2>Hur mycket får du ut efter skatt?</h2>
+<p>Lön efter skatt beror främst på två saker: din bruttolön och var du bor. Kommunalskatten varierar mellan ungefär 29 % och 36 % beroende på kommun, vilket gör att samma månadslön kan ge flera tusen kronor mer – eller mindre – i nettolön per år beroende på var du bor. 2026 års kommunalskatter är grunden för den här kalkylatorn.</p>
+<p>För de flesta anställda är det bara kommunalskatten som dras. Först när den beskattningsbara inkomsten överstiger brytpunkten på 660 400 kr per år (2026) tillkommer 20 % statlig inkomstskatt på den del som ligger över brytpunkten. Jobbskatteavdraget sänker dessutom skatten för dig som arbetar – avdraget är som störst vid medelinkomster och minskar den effektiva skattesatsen med flera procentenheter.</p>
+<p>Den här kalkylatorn ger en förenklad uppskattning. Den tar hänsyn till kommunalskatt, jobbskatteavdrag och statlig skatt över brytpunkten, men inte till till exempel reseavdrag, ränteavdrag eller andra individuella avdrag. Läs <a href="sa-fungerar-det.html">Så fungerar det</a> för den fullständiga metoden, eller <a href="skatt-i-sverige-guide.html">skattguiden</a> för en genomgång av hela det svenska skattesystemet.</p>
+</section>
+
+<section class="prose">
 <h2>Vanliga frågor om lön efter skatt</h2>
 <details><summary>Hur räknar man ut lön efter skatt?</summary><p>Dra av kommunalskatt (ca 29–35 % beroende på kommun) från bruttolönen. Över brytpunkten 660 400 kr/år tillkommer 20 % statlig skatt. Jobbskatteavdraget sänker den effektiva skatten.</p></details>
 <details><summary>Vilken kommun har lägst skatt 2026?</summary><p>Österåker har lägst kommunalskatt 2026 med 28,93 %, följt av Kävlinge och Vellinge. Högst skatt har Dorotea med 35,65 %.</p></details>
 <details><summary>När betalar man statlig inkomstskatt 2026?</summary><p>Statlig inkomstskatt på 20 % betalas på den del av inkomsten som överstiger brytpunkten 660 400 kr/år. Under den betalar man bara kommunalskatt.</p></details>
+<p><a href="vanliga-fragor.html">Se alla frågor →</a></p>
 </section>
 </main>
 <footer class="site-footer"><div class="wrap">
@@ -110,26 +122,5 @@
 </div></footer>
 <div id="cookieBanner" role="dialog" aria-label="Cookies"><p>Vi använder cookies för att förbättra din upplevelse och för annonsering. <a href="cookiepolicy.html" style="color:#ffd200">Läs mer</a>.</p><div class="row"><button id="cookieAccept">Acceptera</button><button id="cookieDecline">Avböj</button></div></div>
 <script src="assets/app.js"></script>
-<script>
-function berakna(){
-  var lon=parseFloat(document.getElementById('lon').value);
-  var k=parseFloat(document.getElementById('kommun').value);
-  var res=document.getElementById('result');
-  if(!lon||lon<=0||isNaN(k)){res.innerHTML='<p><strong>Ange en giltig bruttolön och välj kommun.</strong></p>';return;}
-  var arslon=lon*12;
-  var skattbar=arslon-15600;
-  if(skattbar<0)skattbar=0;
-  var kommunalskatt=skattbar*k/100;
-  var jobbskatteavdrag=Math.min(arslon*0.09,39318);
-  if(arslon<100000)jobbskatteavdrag=arslon*0.05;
-  var statlig=0;
-  if(skattbar>660400)statlig=(skattbar-660400)*0.20;
-  var skatt=kommunalskatt-jobbskatteavdrag+statlig;
-  if(skatt<0)skatt=0;
-  var nettoAr=arslon-skatt;
-  var nettoMan=nettoAr/12;
-  res.innerHTML='<p><strong>Nettolön:</strong> '+Math.round(nettoMan).toLocaleString('sv-SE')+' kr/mån ('+Math.round(nettoAr).toLocaleString('sv-SE')+' kr/år)</p><p class="muted">Skatt totalt: '+Math.round(skatt).toLocaleString('sv-SE')+' kr/år · Kommunalskatt: '+Math.round(kommunalskatt).toLocaleString('sv-SE')+' kr · Jobbskatteavdrag: −'+Math.round(jobbskatteavdrag).toLocaleString('sv-SE')+' kr'+(statlig>0?' · Statlig skatt: '+Math.round(statlig).toLocaleString('sv-SE')+' kr':'')+'</p>';
-}
-</script>
 </body>
 </html>
